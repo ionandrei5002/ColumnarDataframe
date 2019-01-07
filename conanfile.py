@@ -12,7 +12,7 @@ class HelloConan(ConanFile):
         meson = Meson(self)
         meson.configure(
             source_folder="%s" % self.source_folder,
-            build_folder="build"
+            build_folder=""
         )
         meson.build()
 
