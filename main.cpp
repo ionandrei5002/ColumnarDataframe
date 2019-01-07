@@ -1,7 +1,13 @@
-#include <cstdio>
+#include <iostream>
+#include <bytebuffer.h>
 
 int main(int argc, char const *argv[])
 {
-    std::printf("%s", "test\n");
+    std::string str("test");
+
+    ByteBuffer buffer(str.size(), str.data());
+
+    std::cout << buffer << '\n';
+
     return 0;
 }
