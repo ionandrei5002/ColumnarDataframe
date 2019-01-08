@@ -29,20 +29,20 @@ void TypedColumn<StringType>::append(const ByteBuffer& value)
 }
 
 template<typename T>
-const ByteBuffer TypedColumn<T>::read(uint64_t position) const
+const ViewByteBuffer TypedColumn<T>::read(uint64_t position) const
 {
     const _type* temp;
     temp = &_store.at(position);
 
-    ByteBuffer value(reinterpret_cast<const char*>(temp), sizeof(_type));
+    ViewByteBuffer value(reinterpret_cast<const char*>(temp), sizeof(_type));
 
     return value;
 }
 
 template<>
-const ByteBuffer TypedColumn<StringType>::read(uint64_t position) const
+const ViewByteBuffer TypedColumn<StringType>::read(uint64_t position) const
 {
-    return _store.at(position);
+    return ViewByteBuffer(_store.at(position));
 }
 
 template class TypedColumn<UInt8Type>;

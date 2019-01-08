@@ -30,4 +30,26 @@ public:
     friend bool operator<(const ByteBuffer& lv, const ByteBuffer& rv);
 };
 
+class ViewByteBuffer
+{
+public:
+    uint64_t _size = 0;
+    char* _data = nullptr;
+public:
+    ViewByteBuffer():_size(0),_data(nullptr) {}
+    ViewByteBuffer(const char* data, uint64_t size);
+    ViewByteBuffer(const ViewByteBuffer& ot);
+    ViewByteBuffer& operator=(const ViewByteBuffer& ot);
+    ViewByteBuffer(ViewByteBuffer&& ot);
+    ViewByteBuffer& operator=(ViewByteBuffer&& ot);
+    ViewByteBuffer(const ByteBuffer& ot);
+    ~ViewByteBuffer();
+    bool operator ==(const ViewByteBuffer& value);
+    bool operator !=(const ViewByteBuffer& value);
+    bool operator <(const ViewByteBuffer& value);
+    bool operator >(const ViewByteBuffer& value);
+    friend std::ostream& operator<<(std::ostream& out, const ViewByteBuffer& ot);
+    friend bool operator<(const ViewByteBuffer& lv, const ViewByteBuffer& rv);
+};
+
 #endif // BYTEBUFFER_H

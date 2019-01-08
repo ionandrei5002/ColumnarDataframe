@@ -13,7 +13,7 @@ public:
     Column();
     virtual ~Column();
     virtual void append(const ByteBuffer& value) = 0;
-    virtual const ByteBuffer read(uint64_t position) const = 0;
+    virtual const ViewByteBuffer read(uint64_t position) const = 0;
     uint64_t size();
 };
 
@@ -27,7 +27,7 @@ public:
     explicit TypedColumn();
     ~TypedColumn();
     void append(const ByteBuffer& value) override;
-    const ByteBuffer read(uint64_t position) const override;
+    const ViewByteBuffer read(uint64_t position) const override;
 };
 
 typedef TypedColumn<UInt8Type> UInt8Column;

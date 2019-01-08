@@ -4,30 +4,75 @@
 #include <string_view>
 #include <column.h>
 
-TEST_CASE( "Column1", "[uint8 operations]" ) 
+TEST_CASE( "Column") 
 {
-    UInt8Column column;
-    uint8_t test = 32;
-    ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
-    column.append(buffer);
+    SECTION("uint8") 
+    {
+        UInt8Column column;
+        uint8_t test = 32;
+        ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
+        column.append(buffer);
 
-    REQUIRE(column.size() == 1);
+        REQUIRE(column.size() == 1);
 
-    buffer = column.read(0);
+        ViewByteBuffer buff = column.read(0);
 
-    REQUIRE(*reinterpret_cast<uint8_t*>(buffer._data) == 32);
-}
+        REQUIRE(*reinterpret_cast<uint8_t*>(buff._data) == 32);
+    }
 
-TEST_CASE( "Column2", "[string operations]" ) 
-{
-    StringColumn column;
-    std::string test = "32";
-    ByteBuffer buffer(test.data(), test.size());
-    column.append(buffer);
+    SECTION("uint16") 
+    {
+        UInt16Column column;
+        uint16_t test = 32;
+        ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
+        column.append(buffer);
 
-    REQUIRE(column.size() == 1);
+        REQUIRE(column.size() == 1);
 
-    buffer = column.read(0);
+        ViewByteBuffer buff = column.read(0);
 
-    REQUIRE(std::string(buffer._data, buffer._size) == "32");
+        REQUIRE(*reinterpret_cast<uint16_t*>(buff._data) == 32);
+    }
+
+    SECTION("uint32") 
+    {
+        UInt32Column column;
+        uint32_t test = 32;
+        ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
+        column.append(buffer);
+
+        REQUIRE(column.size() == 1);
+
+        ViewByteBuffer buff = column.read(0);
+
+        REQUIRE(*reinterpret_cast<uint32_t*>(buff._data) == 32);
+    }
+
+    SECTION("uint64") 
+    {
+        UInt64Column column;
+        uint64_t test = 32;
+        ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
+        column.append(buffer);
+
+        REQUIRE(column.size() == 1);
+
+        ViewByteBuffer buff = column.read(0);
+
+        REQUIRE(*reinterpret_cast<uint64_t*>(buff._data) == 32);
+    }
+
+    SECTION("string")
+    {
+        StringColumn column;
+        std::string test = "32";
+        ByteBuffer buffer(test.data(), test.size());
+        column.append(buffer);
+
+        REQUIRE(column.size() == 1);
+
+        ViewByteBuffer buff = column.read(0);
+
+        REQUIRE(std::string(buff._data, buff._size) == "32");
+    }
 }
