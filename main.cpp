@@ -4,11 +4,16 @@
 
 int main(int argc, char const *argv[])
 {
-    std::string str("test");
+    UInt64Column column;
+    uint64_t test = 32;
+    ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
+    for (uint64_t i = 0; i < 100'000; i++)
+        column.append(buffer);
 
-    ByteBuffer buffer(str.data(), str.size());
+    std::cout << "column size: " << column.size() << '\n';
 
-    std::cout << buffer << '\n';
+    ViewByteBuffer buff = column.read(0);
+    std::cout << "value: " << *reinterpret_cast<uint64_t*>(buff._data) << '\n';
 
     return 0;
 }

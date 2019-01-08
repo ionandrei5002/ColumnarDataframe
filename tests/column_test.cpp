@@ -62,6 +62,21 @@ TEST_CASE( "Column")
         REQUIRE(*reinterpret_cast<uint64_t*>(buff._data) == 32);
     }
 
+    SECTION("many uint64") 
+    {
+        UInt64Column column;
+        uint64_t test = 32;
+        ByteBuffer buffer(reinterpret_cast<char*>(&test), sizeof(test));
+        for (uint64_t i = 0; i < 100'000; i++)
+            column.append(buffer);
+
+        REQUIRE(column.size() == 100'000);
+
+        ViewByteBuffer buff = column.read(0);
+
+        REQUIRE(*reinterpret_cast<uint64_t*>(buff._data) == 32);
+    }
+
     SECTION("string")
     {
         StringColumn column;
